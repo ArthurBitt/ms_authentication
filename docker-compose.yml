@@ -1,0 +1,40 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: docker_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: dev_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - ms_auth_network
+
+  app:
+    image: ms_authentication_image
+    container_name: ms_authentication_container
+    env_file: .env
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/application
+    networks:
+      - ms_auth_network
+    stdin_open: true  # -i
+    tty: true         # -t
+    command: /bin/sh  # Abre o shell ao iniciar
+
+
+volumes:
+  pgdata:
+
+networks:
+  ms_auth_network:

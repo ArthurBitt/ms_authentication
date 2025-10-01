@@ -1,0 +1,8 @@
+**/*.txt       # ignora todos os .txt em qualquer subpasta
+diagram.txt  # ignora apenas o arquivo diagram.txt na raiz
+**/*.pyc
+**/__pycache__/
+**/*.env
+**/*.venv/
+**/venv/
+**/.git
